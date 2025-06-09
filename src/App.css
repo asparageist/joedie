@@ -175,32 +175,6 @@ button:hover {
   cursor: not-allowed;
 }
 
-.die select {
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.25rem;
-  font-size: 1rem;
-  background-color: #f5f5f5;
-  border: 2px solid black;
-  border-radius: 4px 4px 0 0;
-  width: 80%;
-  font-family: 'Amatic SC', cursive;
-  font-weight: 700;
-  font-size: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.die.selected select {
-  background-color: white;
-  border-color: red;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .die-value {
   font-size: 8rem;
   color: white;
@@ -274,14 +248,133 @@ button:hover {
   color: white;
 }
 
+.die-selection {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.die-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.dice-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.die-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin: 5px;
+  border: 2px solid red;
+  border-radius: 8px;
+  background: black;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.die-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid white;
+}
+
+.die-button img {
+  width: 40px;
+  height: 40px;
+  margin: 5px 0;
+}
+
+.die-button span:first-child {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #fff;
+}
+
+.die-button span:last-child {
+  font-size: 1em;
+  color: red;
+  margin-top: 2px;
+}
+
+.action-button {
+  min-width: 100px;
+  justify-content: center;
+  background: black;
+  border: 2px solid red;
+  padding: 15px 20px;
+}
+
+.action-button:hover {
+  background: black;
+  border: 2px solid white;
+}
+
+.action-button span {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #fff;
+}
+
+.die-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  z-index: 1;
+}
+
+.die-controls button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background: black;
+  border: 2px solid red;
+  color: #fff;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.die-controls button:hover:not(:disabled) {
+  /* background: #444; */
+  border-color: #fff;
+}
+
+.die-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .splash-container {
   position: relative;
-  width: 700px;
-  margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .splash-image {
   width: 100%;
+  max-width: 600px;
   height: auto;
 }
 
@@ -294,4 +387,45 @@ button:hover {
   font-size: 25rem;
   white-space: nowrap;
   -webkit-text-stroke: 3px black;
+}
+
+.remove-die {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: black;
+  border: 2px solid red;
+  color: red;
+  font-size: 28px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.die:hover .remove-die {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.remove-die:hover {
+  background: red;
+  color: black;
+  border-color: black;
+  transform: scale(1.1);
+}
+
+.remove-die:disabled {
+  opacity: 0;
+  cursor: not-allowed;
+  transform: none;
 }

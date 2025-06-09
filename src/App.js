@@ -1,31 +1,75 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import skullSplat from './img/skullsplat2.png';
-import skullSplashSound from './sfx/skullsplash.wav';
-import rollSound from './sfx/roll.wav';
-import stopSound from './sfx/stop.wav';
+import skullSplashSound from './sfx/skullsplash.mp3';
+import rollSound from './sfx/roll.mp3';
+import stopSound from './sfx/stop.mp3';
+import d4 from './img/d4.png';
+import d6 from './img/d6.png';
+import d8 from './img/d8.png';
+import d10 from './img/d10.png';
+import d12 from './img/d12.png';
+import d20 from './img/d20.png';
 
 function App() {
-  const [numDice, setNumDice] = useState(0);
   const [dice, setDice] = useState([]);
   const [showDice, setShowDice] = useState(false);
   const [isRolling, setIsRolling] = useState(false);
   const [displayValues, setDisplayValues] = useState([]);
   const [selectedDice, setSelectedDice] = useState([]);
   const [rollingDice, setRollingDice] = useState([]);
+  const [selectedDiceCount, setSelectedDiceCount] = useState({
+    4: 0,
+    6: 0,
+    8: 0,
+    10: 0,
+    12: 0,
+    20: 0
+  });
+
+  const playAudio = (audioFile) => {
+    try {
+      const audio = new Audio(audioFile);
+      audio.play().catch(error => {
+        console.warn('Audio playback failed:', error);
+      });
+    } catch (error) {
+      console.warn('Audio initialization failed:', error);
+    }
+  };
 
   useEffect(() => {
-    const splashAudio = new Audio(skullSplashSound);
-    splashAudio.play();
+    playAudio(skullSplashSound);
   }, []);
 
-  const handleNumDiceSubmit = (e) => {
-    e.preventDefault();
-    const num = parseInt(e.target.numDice.value);
-    if (num > 0) {
-      setNumDice(num);
-      setDice(Array(num).fill().map(() => ({ faces: 6, value: 1 })));
-      setDisplayValues(Array(num).fill(1));
+  const handleDieSelect = (faces) => {
+    setSelectedDiceCount(prev => ({
+      ...prev,
+      [faces]: prev[faces] + 1
+    }));
+  };
+
+  const handleDieRemove = (faces) => {
+    setSelectedDiceCount(prev => ({
+      ...prev,
+      [faces]: Math.max(0, prev[faces] - 1)
+    }));
+  };
+
+  const startRolling = () => {
+    const newDice = [];
+    Object.entries(selectedDiceCount).forEach(([faces, count]) => {
+      for (let i = 0; i < count; i++) {
+        newDice.push({
+          faces: parseInt(faces),
+          value: getRandomValue(parseInt(faces))
+        });
+      }
+    });
+
+    if (newDice.length > 0) {
+      setDice(newDice);
+      setDisplayValues(Array(newDice.length).fill(1));
       setSelectedDice([]);
       setShowDice(true);
     }
@@ -58,11 +102,11 @@ function App() {
   };
 
   const rollDice = () => {
+    if (isRolling) return;
+    
     setIsRolling(true);
     setRollingDice([]);
-
-    const rollAudio = new Audio(rollSound);
-    rollAudio.play();
+    playAudio(rollSound);
 
     const newDice = dice.map((die, index) => ({
       ...die,
@@ -121,36 +165,95 @@ function App() {
   };
 
   const resetDice = () => {
-    setNumDice(0);
     setDice([]);
     setDisplayValues([]);
     setSelectedDice([]);
     setRollingDice([]);
     setShowDice(false);
-    const splashAudio = new Audio(skullSplashSound);
-    splashAudio.play();
+    setSelectedDiceCount({
+      4: 0,
+      6: 0,
+      8: 0,
+      10: 0,
+      12: 0,
+      20: 0
+    });
+    playAudio(skullSplashSound);
+  };
+
+  const removeDie = (index) => {
+    if (isRolling) return;
+    
+    setDice(prevDice => {
+      const newDice = prevDice.filter((_, i) => i !== index);
+      if (newDice.length === 0) {
+        setShowDice(false);
+        playAudio(skullSplashSound);
+      }
+      return newDice;
+    });
+    setDisplayValues(prevValues => prevValues.filter((_, i) => i !== index));
+    setSelectedDice(prevSelected => prevSelected.filter(i => i !== index));
   };
 
   return (
     <div className="App">
       <header className="App-header">
         {!showDice ? (
-          <form onSubmit={handleNumDiceSubmit}>
+          <div>
             <div className="splash-container">
               <img src={skullSplat} alt="Skull Splat" className="splash-image" />
               <div className="splash-text">Joe diE</div>
             </div>
-            <label>
-              BONES:
-              <input
-                type="number"
-                name="numDice"
-                min="1"
-                required
-              />
-            </label>
-            <button type="submit">ROLL EM</button>
-          </form>
+            <div className="die-selection">
+              <div className="die-buttons">
+                <div className="dice-grid">
+                  <button onClick={() => handleDieSelect(4)} className="die-button">
+                    <span>d4</span>
+                    <img src={d4} alt="d4" />
+                    <span>{selectedDiceCount[4]}</span>
+                  </button>
+                  <button onClick={() => handleDieSelect(6)} className="die-button">
+                    <span>d6</span>
+                    <img src={d6} alt="d6" />
+                    <span>{selectedDiceCount[6]}</span>
+                  </button>
+                  <button onClick={() => handleDieSelect(8)} className="die-button">
+                    <span>d8</span>
+                    <img src={d8} alt="d8" />
+                    <span>{selectedDiceCount[8]}</span>
+                  </button>
+                  <button onClick={() => handleDieSelect(10)} className="die-button">
+                    <span>d10</span>
+                    <img src={d10} alt="d10" />
+                    <span>{selectedDiceCount[10]}</span>
+                  </button>
+                  <button onClick={() => handleDieSelect(12)} className="die-button">
+                    <span>d12</span>
+                    <img src={d12} alt="d12" />
+                    <span>{selectedDiceCount[12]}</span>
+                  </button>
+                  <button onClick={() => handleDieSelect(20)} className="die-button">
+                    <span>d20</span>
+                    <img src={d20} alt="d20" />
+                    <span>{selectedDiceCount[20]}</span>
+                  </button>
+                </div>
+                {Object.values(selectedDiceCount).some(count => count > 0) && (
+                  <div className="action-buttons">
+                    <button onClick={startRolling} className="die-button action-button">
+                      <span>ROLL EM</span>
+                    </button>
+                    <button onClick={() => setSelectedDiceCount({
+                      4: 0, 6: 0, 8: 0, 10: 0, 12: 0, 20: 0
+                    })} className="die-button action-button">
+                      <span>IXNAY</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         ) : (
           <div className="dice-container">
             {dice.map((die, index) => (
@@ -160,19 +263,16 @@ function App() {
                 onClick={() => toggleDieSelection(index)}
                 data-faces={die.faces}
               >
-                <select
-                  value={die.faces}
-                  onChange={(e) => handleFaceChange(index, e.target.value)}
+                <button 
+                  className="remove-die"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeDie(index);
+                  }}
                   disabled={isRolling}
-                  onClick={(e) => e.stopPropagation()}
                 >
-                  <option value="4">d4</option>
-                  <option value="6">d6</option>
-                  <option value="8">d8</option>
-                  <option value="10">d10</option>
-                  <option value="12">d12</option>
-                  <option value="20">d20</option>
-                </select>
+                  ×
+                </button>
                 <div className="die-value">{displayValues[index]}</div>
               </div>
             ))}
