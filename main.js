@@ -10,7 +10,9 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false
     },
-    icon: path.join(__dirname, 'public', 'favicon192.png')
+    icon: path.join(__dirname, 'public', 'favicon.png'),
+    autoHideMenuBar: true,
+    show: false
   });
 
   if (isDev) {
@@ -18,7 +20,18 @@ function createWindow() {
     win.webContents.openDevTools();
   } else {
     win.loadFile(path.join(__dirname, 'build', 'index.html'));
+    win.webContents.openDevTools();
   }
+
+  win.once('ready-to-show', () => {
+    win.show();
+  });
+
+  win.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.error('Failed to load:', errorCode, errorDescription);
+  });
+
+  console.log('Loading from:', path.join(__dirname, 'build', 'index.html'));
 }
 
 app.whenReady().then(createWindow);
