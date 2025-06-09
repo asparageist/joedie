@@ -59,11 +59,11 @@
       "package.json"
     ],
     "directories": {
-      "buildResources": "assets",
+      "buildResources": "build",
       "output": "dist"
     },
     "win": {
-      "icon": "public/favicon.png",
+      "icon": "build/favicon.png",
       "target": [
         "nsis"
       ],

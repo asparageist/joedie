@@ -10,7 +10,9 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false
     },
-    icon: path.join(__dirname, 'public', 'favicon.png'),
+    icon: isDev 
+      ? path.join(__dirname, 'public', 'favicon.png')
+      : path.join(process.resourcesPath, 'app.asar', 'build', 'favicon.png'),
     autoHideMenuBar: true,
     show: false
   });
