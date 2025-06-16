@@ -200,12 +200,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         {!showDice ? (
-          <div>
-            <div className="splash-container">
-              <img src={skullSplat} alt="Skull Splat" className="splash-image" />
+          <div className="splash-background">
+            <img src={skullSplat} alt="Skull Splat" className="splash-image" />
+            <div className="content-container">
               <div className="splash-text">Joe diE</div>
-            </div>
-            <div className="die-selection">
               <div className="die-buttons">
                 <div className="dice-grid">
                   <button onClick={() => handleDieSelect(4)} className="die-button">
@@ -239,18 +237,16 @@ function App() {
                     <span>{selectedDiceCount[20]}</span>
                   </button>
                 </div>
-                {Object.values(selectedDiceCount).some(count => count > 0) && (
-                  <div className="action-buttons">
-                    <button onClick={startRolling} className="die-button action-button">
-                      <span>ROLL EM</span>
-                    </button>
-                    <button onClick={() => setSelectedDiceCount({
-                      4: 0, 6: 0, 8: 0, 10: 0, 12: 0, 20: 0
-                    })} className="die-button action-button">
-                      <span>IXNAY</span>
-                    </button>
-                  </div>
-                )}
+                <div className="action-buttons">
+                  <button onClick={startRolling} className="die-button action-button">
+                    <span>ROLL EM</span>
+                  </button>
+                  <button onClick={() => setSelectedDiceCount({
+                    4: 0, 6: 0, 8: 0, 10: 0, 12: 0, 20: 0
+                  })} className="die-button action-button">
+                    <span>IXNAY</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
