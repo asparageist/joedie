@@ -4,6 +4,11 @@ import skullSplat from './img/skullsplat2.png';
 import skullSplashSound from './sfx/skullsplash.mp3';
 import rollSound from './sfx/roll.mp3';
 import stopSound from './sfx/stop.mp3';
+import addBonesSound from './sfx/addbones.mp3';
+import dieRollSound from './sfx/dieroll.mp3';
+import holdSound from './sfx/hold.mp3';
+import ixnaySound from './sfx/ixnay.mp3';
+import removeSound from './sfx/remove.mp3';
 import d4 from './img/d4.png';
 import d6 from './img/d6.png';
 import d8 from './img/d8.png';
@@ -43,6 +48,7 @@ function App() {
   }, []);
 
   const handleDieSelect = (faces) => {
+    playAudio(addBonesSound);
     setSelectedDiceCount(prev => ({
       ...prev,
       [faces]: prev[faces] + 1
@@ -57,6 +63,7 @@ function App() {
   };
 
   const startRolling = () => {
+    playAudio(dieRollSound);
     const newDice = [];
     Object.entries(selectedDiceCount).forEach(([faces, count]) => {
       for (let i = 0; i < count; i++) {
@@ -88,6 +95,7 @@ function App() {
   const toggleDieSelection = (index) => {
     if (isRolling) return;
     
+    playAudio(holdSound);
     setSelectedDice(prevSelected => {
       if (prevSelected.includes(index)) {
         return prevSelected.filter(i => i !== index);
@@ -184,6 +192,7 @@ function App() {
   const removeDie = (index) => {
     if (isRolling) return;
     
+    playAudio(removeSound);
     setDice(prevDice => {
       const newDice = prevDice.filter((_, i) => i !== index);
       if (newDice.length === 0) {
@@ -241,9 +250,12 @@ function App() {
                   <button onClick={startRolling} className="die-button action-button">
                     <span>ROLL EM</span>
                   </button>
-                  <button onClick={() => setSelectedDiceCount({
-                    4: 0, 6: 0, 8: 0, 10: 0, 12: 0, 20: 0
-                  })} className="die-button action-button">
+                  <button onClick={() => {
+                    playAudio(ixnaySound);
+                    setSelectedDiceCount({
+                      4: 0, 6: 0, 8: 0, 10: 0, 12: 0, 20: 0
+                    });
+                  }} className="die-button action-button">
                     <span>IXNAY</span>
                   </button>
                 </div>
