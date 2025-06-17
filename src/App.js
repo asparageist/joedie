@@ -5,10 +5,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import SplashScreen from './components/SplashScreen';
-import DiceRoller from './components/DiceRoller';
-import { useDiceGame } from './hooks/useDiceRoller';
+import { useDiceRoller } from './hooks/useDiceRoller';
 import { playAudio } from './utils/audioUtils';
 import skullSplashSound from './sfx/skullsplash.wav';
+import DiceRoller from './components/DiceRoller';
 
 function App() {
   const [showDice, setShowDice] = useState(false);
@@ -25,7 +25,7 @@ function App() {
     handleToggleSelection,
     rollDice,
     resetGame
-  } = useDiceGame();
+  } = useDiceRoller();
 
   // Play splash sound on app load
   useEffect(() => {

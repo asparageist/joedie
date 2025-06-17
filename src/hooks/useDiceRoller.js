@@ -8,7 +8,7 @@ import stopSound from '../sfx/stop.wav';
 /**
  * Custom hook for managing dice game state and logic
  */
-export const useDiceGame = () => {
+export const useDiceRoller = () => {
   const [dice, setDice] = useState([]);
   const [displayValues, setDisplayValues] = useState([]);
   const [selectedDice, setSelectedDice] = useState([]);
