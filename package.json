@@ -1,5 +1,4 @@
 {
-  "main": "main.js",
   "name": "joedie",
   "version": "0.1.0",
   "private": true,
@@ -19,10 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "electron-builder",
-    "preelectron-pack": "npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -41,43 +37,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.2",
-    "cross-env": "^7.0.3",
-    "electron": "^28.1.0",
-    "electron-builder": "^24.9.1",
-    "wait-on": "^7.2.0"
-  },
-  "build": {
-    "appId": "com.joedie.app",
-    "productName": "JOE DIE",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*",
-      "main.js",
-      "package.json"
-    ],
-    "directories": {
-      "buildResources": "build",
-      "output": "dist"
-    },
-    "win": {
-      "icon": "build/favicon.png",
-      "target": [
-        "nsis"
-      ],
-      "signingHashAlgorithms": null,
-      "signAndEditExecutable": false
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "artifactName": "${productName}-Setup-${version}.${ext}"
-    },
-    "extraMetadata": {
-      "main": "main.js"
-    }
   }
 }
