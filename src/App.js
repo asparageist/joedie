@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import skullSplat from './img/skullsplat2.png';
 import skullSplashSound from './sfx/skullsplash.mp3';
 import rollSound from './sfx/roll.mp3';
 import stopSound from './sfx/stop.mp3';
@@ -9,12 +8,14 @@ import dieRollSound from './sfx/dieroll.mp3';
 import holdSound from './sfx/hold.mp3';
 import ixnaySound from './sfx/ixnay.mp3';
 import removeSound from './sfx/remove.mp3';
-import d4 from './img/d4.png';
-import d6 from './img/d6.png';
-import d8 from './img/d8.png';
-import d10 from './img/d10.png';
-import d12 from './img/d12.png';
-import d20 from './img/d20.png';
+
+const skullSplat = 'https://i.imgur.com/yUmfJvj.png';
+const d4 = 'https://i.imgur.com/XeADQ3n.png';
+const d6 = 'https://i.imgur.com/Fp6Gcgd.png';
+const d8 = 'https://i.imgur.com/uDMoVFD.png';
+const d10 = 'https://i.imgur.com/Mt5tyAp.png';
+const d12 = 'https://i.imgur.com/uq3Xzk5.png';
+const d20 = 'https://i.imgur.com/aA7h2Sd.png';
 
 function App() {
   const [dice, setDice] = useState([]);
