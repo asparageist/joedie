@@ -135,37 +135,37 @@ button:hover {
 
 /* Die background images */
 .die[data-faces="4"] {
-  background-image: url('./img/d4.png');
+  background-image: url('https://i.imgur.com/XeADQ3n.png');
   background-color: rgba(255, 255, 255, 0.8);
   background-blend-mode: lighten;
 }
 
 .die[data-faces="6"] {
-  background-image: url('./img/d6.png');
+  background-image: url('https://i.imgur.com/Fp6Gcgd.png');
   background-color: rgba(255, 255, 255, 0.8);
   background-blend-mode: lighten;
 }
 
 .die[data-faces="8"] {
-  background-image: url('./img/d8.png');
+  background-image: url('https://i.imgur.com/uDMoVFD.png');
   background-color: rgba(255, 255, 255, 0.8);
   background-blend-mode: lighten;
 }
 
 .die[data-faces="10"] {
-  background-image: url('./img/d10.png');
+  background-image: url('https://i.imgur.com/Mt5tyAp.png');
   background-color: rgba(255, 255, 255, 0.8);
   background-blend-mode: lighten;
 }
 
 .die[data-faces="12"] {
-  background-image: url('./img/d12.png');
+  background-image: url('https://i.imgur.com/uq3Xzk5.png');
   background-color: rgba(255, 255, 255, 0.8);
   background-blend-mode: lighten;
 }
 
 .die[data-faces="20"] {
-  background-image: url('./img/d20.png');
+  background-image: url('https://i.imgur.com/aA7h2Sd.png');
   background-color: rgba(255, 255, 255, 0.8);
   background-blend-mode: lighten;
 }
