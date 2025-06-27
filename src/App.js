@@ -32,6 +32,7 @@ function App() {
     12: 0,
     20: 0
   });
+  const [showButtons, setShowButtons] = useState(false);
 
   const playAudio = (audioFile) => {
     try {
@@ -188,6 +189,7 @@ function App() {
       20: 0
     });
     playAudio(skullSplashSound);
+    setShowButtons(false);
   };
 
   const removeDie = (index) => {
@@ -213,11 +215,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         {!showDice ? (
-          <div className="splash-background">
+          <div className="splash-background" onClick={() => setShowButtons(true)}>
             <img src={skullSplat} alt="Skull Splat" className="splash-image" />
             <div className="content-container">
               <div className="splash-text">Joe diE</div>
-              <div className="die-buttons">
+              <div className={`die-buttons ${showButtons ? 'fade-in-buttons' : 'hidden-buttons'}`}>
                 <div className="dice-grid">
                   <button onClick={() => handleDieSelect(4)} className="die-button">
                     <span>d4</span>
@@ -267,48 +269,54 @@ function App() {
             </div>
           </div>
         ) : (
-          <div className="dice-container">
-            {dice.map((die, index) => (
-              <div
-                key={index}
-                className={`die ${rollingDice.includes(index) ? 'rolling' : ''} ${selectedDice.includes(index) ? 'selected' : ''}`}
-                onClick={() => toggleDieSelection(index)}
-                data-faces={die.faces}
-              >
-                <button 
-                  className="remove-die"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    removeDie(index);
-                  }}
-                  disabled={isRolling}
+          <div className="dice-container landscape-layout">
+            <div className="dice-row">
+              {dice.map((die, index) => (
+                <div
+                  key={index}
+                  className={`die ${rollingDice.includes(index) ? 'rolling' : ''} ${selectedDice.includes(index) ? 'selected' : ''}`}
+                  onClick={() => toggleDieSelection(index)}
+                  data-faces={die.faces}
                 >
-                  ×
-                </button>
-                <div className="die-value">{displayValues[index]}</div>
-              </div>
-            ))}
-            <div className="controls-container">
-              <button 
-                onClick={rollDice} 
-                className="roll-button"
-                disabled={isRolling}
-              >
-                {isRolling ? 'booga booga booga' : 'ROLL BONES'}
-              </button>
-              <button 
-                onClick={resetDice} 
-                className="new-dice-button"
-                disabled={isRolling}
-              >
-                NEW BONES
-              </button>
+                  <button 
+                    className="remove-die"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeDie(index);
+                    }}
+                    disabled={isRolling}
+                  >
+                    ×
+                  </button>
+                  <div className="die-value">{displayValues[index]}</div>
+                </div>
+              ))}
             </div>
-            {selectedDice.length > 0 && (
-              <div className="total-display">
-                Total: {calculateTotal()}
+            <div className="landscape-controls-col">
+              <div className="landscape-buttons">
+                <div className="controls-container landscape-controls">
+                  <button 
+                    onClick={rollDice} 
+                    className="roll-button"
+                    disabled={isRolling}
+                  >
+                    {isRolling ? 'booga booga booga' : 'ROLL BONES'}
+                  </button>
+                  <button 
+                    onClick={resetDice} 
+                    className="new-dice-button"
+                    disabled={isRolling}
+                  >
+                    NEW BONES
+                  </button>
+                </div>
               </div>
-            )}
+              {selectedDice.length > 0 && (
+                <div className="total-display landscape-total">
+                  {calculateTotal()}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </header>
