@@ -203,7 +203,10 @@ function App() {
       return newDice;
     });
     setDisplayValues(prevValues => prevValues.filter((_, i) => i !== index));
-    setSelectedDice(prevSelected => prevSelected.filter(i => i !== index));
+    setSelectedDice(prevSelected => {
+      const filteredSelected = prevSelected.filter(i => i !== index);
+      return filteredSelected.map(i => i > index ? i - 1 : i);
+    });
   };
 
   return (
